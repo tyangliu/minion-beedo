@@ -1,4 +1,4 @@
-import sys, os, configparser
+import configparser
 from tornado.ioloop import IOLoop
 from tornado.web import Application, url
 from handlers.MainHandler import MainHandler
