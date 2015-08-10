@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 class MinionIO:
 
     def __init__(self):
-        config = MinionIO.get_config()
+        config = self.get_config()
         self.config_gpio(config)
         self.out_alarm = config['out_alarm']
         self.out_speech = config['out_speech']
@@ -23,7 +23,7 @@ class MinionIO:
     @staticmethod
     def get_config():
         config = configparser.ConfigParser()
-        config.read('config.ini')
+        config.read('../config.ini')
         return config['rpi.gpio']
 
     @staticmethod
