@@ -1,7 +1,6 @@
 import configparser
-import asyncio
-import time
 import RPi.GPIO as GPIO
+from tornado import gen
 
 
 class MinionIO:
@@ -38,7 +37,8 @@ class MinionIO:
         GPIO.setup(config['in_button_b'], GPIO.IN)
 
     @staticmethod
+    @gen.coroutine
     def signal(pin):
         GPIO.output(pin, True)
-        time.sleep(0.1)
+        yield gen.sleep(0.1)
         GPIO.output(pin, False)
