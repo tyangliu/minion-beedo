@@ -30,8 +30,8 @@ class MinionIO:
         mode = config['mode']
         GPIO.setmode(GPIO.BOARD if mode == 'board' else GPIO.BCM)
 
-        out_channels = (config['out_alarm'], config['out_speech'])
-        in_channels = (config['in_button_a'], config['in_button_b'])
+        out_channels = (int(config['out_alarm']), int(config['out_speech']))
+        in_channels = (int(config['in_button_a']), int(config['in_button_b']))
 
         GPIO.setup(out_channels, GPIO.OUT)
         GPIO.setup(in_channels, GPIO.IN)
