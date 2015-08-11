@@ -8,10 +8,10 @@ class MinionIO:
     def __init__(self):
         config = self.get_config()
         self.config_gpio(config)
-        self.out_alarm = config['out_alarm']
-        self.out_speech = config['out_speech']
-        self.in_button_a = config['in_button_a']
-        self.in_button_b = config['in_button_b']
+        self.out_alarm = int(config['out_alarm'])
+        self.out_speech = int(config['out_speech'])
+        self.in_button_a = int(config['in_button_a'])
+        self.in_button_b = int(config['in_button_b'])
 
     def signal_alarm(self):
         self.signal(self.out_alarm)
