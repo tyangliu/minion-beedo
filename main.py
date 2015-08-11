@@ -2,7 +2,9 @@ import configparser
 from tornado.ioloop import IOLoop
 from tornado.web import Application, url
 from handlers.MainHandler import MainHandler
-from handlers.BuildHandler import BuildHandler
+from handlers.JenkinsHandler import JenkinsHandler
+from handlers.BananaHandler import BananaHandler
+from gpio.TestMinionIO import TestMinionIO
 
 
 def get_server_config():
@@ -12,9 +14,18 @@ def get_server_config():
 
 
 def make_app():
+    build_state = {'last_status': ''}
+    minion_io = TestMinionIO()
+
     return Application([
         url(r"/", MainHandler),
-        url(r"/build", BuildHandler)
+        url(r"/jenkins", JenkinsHandler, {
+            'state': build_state,
+            'minion_io': minion_io
+        }),
+        url(r"/banana", BananaHandler, {
+            'minion_io': minion_io
+        })
     ])
 
 
