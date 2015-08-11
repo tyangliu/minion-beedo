@@ -4,7 +4,7 @@ from tornado.web import Application, url
 from handlers.MainHandler import MainHandler
 from handlers.JenkinsHandler import JenkinsHandler
 from handlers.BananaHandler import BananaHandler
-from gpio.TestMinionIO import TestMinionIO
+from gpio.MinionIO import MinionIO
 
 
 def get_server_config():
@@ -15,7 +15,7 @@ def get_server_config():
 
 def make_app():
     build_state = {'last_status': ''}
-    minion_io = TestMinionIO()
+    minion_io = MinionIO()
 
     return Application([
         url(r"/", MainHandler),
