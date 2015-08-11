@@ -42,4 +42,3 @@ class MinionIO:
         GPIO.output(pin, True)
         time.sleep(0.1)
         GPIO.output(pin, False)
-
