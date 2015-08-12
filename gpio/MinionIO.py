@@ -33,7 +33,7 @@ class MinionIO:
         GPIO.add_event_detect(in_channels[1], GPIO.RISING, callback=self.input_cb)
 
     def input_cb(self, channel):
-        print('input received')
+        print('input received', channel)
         if channel == self.in_button_a:
             self.signal(self.out_alarm)
         elif channel == self.in_button_b:
