@@ -32,16 +32,15 @@ class MinionIO:
         GPIO.add_event_detect(in_channels[0], GPIO.RISING, callback=self.input_cb, bouncetime=200)
         GPIO.add_event_detect(in_channels[1], GPIO.RISING, callback=self.input_cb, bouncetime=200)
 
-    @gen.coroutine
     def input_cb(self, channel):
         print('input received', channel)
-        GPIO.remove_event_detect(channel)
         if channel == self.in_button_a:
-            self.signal(self.out_alarm)
+            GPIO.output(self.out_alarm, True)
         elif channel == self.in_button_b:
-            self.signal(self.out_speech)
-        yield gen.sleep(1)
-        GPIO.add_event_detect(channel, GPIO.RISING, callback=self.input_cb, bouncetime=200)
+            GPIO.output(self.out_speech, True)
+        else:
+            GPIO.output(self.out_alarm, False)
+            GPIO.output(self.out_speech, False)
 
     @staticmethod
     @gen.coroutine
