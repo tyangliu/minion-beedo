@@ -19,14 +19,7 @@ class MinionIO:
     def signal_speech(self):
         self.signal(self.out_speech)
 
-    @staticmethod
-    def get_config():
-        config = configparser.ConfigParser()
-        config.read('config.ini')
-        return config['rpi.gpio']
-
-    @staticmethod
-    def config_gpio(config):
+    def config_gpio(self, config):
         mode = config['mode']
         GPIO.setmode(GPIO.BOARD if mode == 'board' else GPIO.BCM)
 
@@ -36,9 +29,24 @@ class MinionIO:
         GPIO.setup(out_channels, GPIO.OUT)
         GPIO.setup(in_channels, GPIO.IN)
 
+        GPIO.add_event_detect(in_channels[1], GPIO.RISING, callback=self.input_cb)
+
+    def input_cb(self, channel):
+        print('input received')
+        if channel == self.in_button_a:
+            self.signal(self.out_alarm)
+        elif channel == self.in_button_b:
+            self.signal(self.out_speech)
+
     @staticmethod
     @gen.coroutine
-    def signal(pin):
-        GPIO.output(pin, True)
+    def signal(channel):
+        GPIO.output(channel, True)
         yield gen.sleep(0.1)
-        GPIO.output(pin, False)
+        GPIO.output(channel, False)
+
+    @staticmethod
+    def get_config():
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+        return config['rpi.gpio']
