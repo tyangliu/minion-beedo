@@ -1,6 +1,7 @@
 import configparser
 import RPi.GPIO as GPIO
 from tornado import gen
+import time
 
 
 class MinionIO:
@@ -29,8 +30,8 @@ class MinionIO:
         GPIO.setup(out_channels, GPIO.OUT)
         GPIO.setup(in_channels, GPIO.IN)
 
-        GPIO.add_event_detect(in_channels[0], GPIO.RISING, callback=self.input_cb, bouncetime=200)
-        GPIO.add_event_detect(in_channels[1], GPIO.RISING, callback=self.input_cb, bouncetime=200)
+        GPIO.add_event_detect(in_channels[0], GPIO.RISING, callback=self.input_cb, bouncetime=1000)
+        GPIO.add_event_detect(in_channels[1], GPIO.RISING, callback=self.input_cb, bouncetime=1000)
 
     def input_cb(self, channel):
         print('input received', channel)
@@ -41,6 +42,7 @@ class MinionIO:
         else:
             GPIO.output(self.out_alarm, False)
             GPIO.output(self.out_speech, False)
+        time.sleep(1)
 
     @staticmethod
     @gen.coroutine
