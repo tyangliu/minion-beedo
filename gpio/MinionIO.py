@@ -29,6 +29,7 @@ class MinionIO:
         GPIO.setup(out_channels, GPIO.OUT)
         GPIO.setup(in_channels, GPIO.IN)
 
+        GPIO.add_event_detect(in_channels[0], GPIO.RISING, callback=self.input_cb)
         GPIO.add_event_detect(in_channels[1], GPIO.RISING, callback=self.input_cb)
 
     def input_cb(self, channel):
