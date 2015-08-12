@@ -40,7 +40,7 @@ class MinionIO:
             self.signal(self.out_alarm)
         elif channel == self.in_button_b:
             self.signal(self.out_speech)
-        gen.sleep(1)
+        yield gen.sleep(1)
         GPIO.add_event_detect(channel, GPIO.RISING, callback=self.input_cb, bouncetime=200)
 
     @staticmethod
